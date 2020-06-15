@@ -5,7 +5,7 @@
 import json
 import dateutil.parser
 import babel
-from flask import Flask, render_template, request, Response, flash, redirect, url_for, abort
+from flask import Flask, render_template, request, Response, flash, redirect, url_for, abort, jsonify
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -251,23 +251,20 @@ def create_venue_submission():
     # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
   return render_template('pages/home.html')
 
-@app.route('/venues/<venue_id>', methods=['DELETE'])
+@app.route('/venues/<int:venue_id>', methods=['DELETE'])
 def delete_venue(venue_id):
-  error = False
   try:
-    Venue.query.filter_by(id=venue_id).delete()
-    db.session.commit()
+      venue = Venue.query.get(venue_id)
+      db.session.delete(venue)
+      db.session.commit()
+      flash('The Venue has been successfully deleted!')
+      return render_template('pages/home.html')
   except:
-    error = True
-    db.session.rollback()
-    print(sys.exc_info())
+      db.session.rollback()
+      flash('Delete was unsuccessful. Try again!')
   finally:
-    db.session.close()
-  if error: 
-    flash(f'An error occurred. Venue {venue_id} could not be deleted.')
-  if not error: 
-    flash(f'Venue {venue_id} was successfully deleted.')
-  return jsonify({'success':True})
+      db.session.close()
+  return None
 
   # BONUS CHALLENGE: Implement a button to delete a Venue on a Venue Page, have it so that
   # clicking that button delete it from the db then redirect the user to the homepage
@@ -322,10 +319,11 @@ def show_artist(artist_id):
   past_shows = []
 
   for show in past_shows_query:
+    venue = Venue.query.filter_by(id = show.venue_id).first_or_404()
     past_shows.append({
       "venue_id": show.venue_id,
-      "venue_name": show.venue.name,
-      "venue_image_link": show.venue.image_link,
+      "venue_name": venue.name,
+      "venue_image_link": venue.image_link,
       "start_time": show.start_time.strftime('%Y-%m-%d %H:%M:%S')
     })
 
@@ -333,10 +331,11 @@ def show_artist(artist_id):
   upcoming_shows = []
 
   for show in upcoming_shows_query:
+    venue = Venue.query.filter_by(id = show.venue_id).first_or_404()
     upcoming_shows.append({
       "venue_id": show.venue_id,
-      "venue_name": show.Venue.name,
-      "artist_image_link": show.Venue.image_link,
+      "venue_name": venue.name,
+      "artist_image_link": venue.image_link,
       "start_time": show.start_time.strftime('%Y-%m-%d %H:%M:%S')
     })
   data={
@@ -362,7 +361,7 @@ def show_artist(artist_id):
 def delete_artist(artist_id):
   error = False
   try:
-    Artist.query.filter_by(id=artist_id).delete()
+    Artist.query.filter(id==artist_id).delete()
     db.session.commit()
     flash(f"Artist is deleted successfully!")
   except:
@@ -372,7 +371,6 @@ def delete_artist(artist_id):
     print(sys.exc_info())
   finally:
     db.session.close()
-
   return jsonify({'success':True})
 #  Update
 #  ----------------------------------------------------------------
@@ -530,20 +528,20 @@ def shows():
   # Done: replace with real venues data.
   #       num_shows should be aggregated based on number of upcoming shows per venue.
   data = []
-  shows = db.session.query(Show.artist_id, Show.venue_id, Show.start_time).all()
+  shows = Show.query.order_by(Show.start_time.desc()).all()
   for show in shows:
-      artist = db.session.query(Artist.name, Artist.image_link).filter(Artist.id == show[0]).one()
-      venue = db.session.query(Venue.name).filter(Venue.id == show[1]).one()
+      artist = db.session.query(Artist).filter_by(id = show.artist_id).first_or_404()
+      venue = db.session.query(Venue).filter_by(id = show.venue_id).first_or_404()
       data.append({
-          "venue_id": show[1],
-          "venue_name": venue[0],
-          "artist_id": show[0],
-          "artist_name": artist[0],
-          "artist_image_link": artist[1],
-          "start_time": str(show[2])
+          "venue_id": show.venue_id,
+          "venue_name": venue.name,
+          "artist_id": show.artist_id,
+          "artist_name": artist.name,
+          "artist_image_link": artist.image_link,
+          "start_time": show.start_time.strftime("%m/%d/%Y, %H:%M")
       })
   return render_template('pages/shows.html', shows=data)
-  
+
 @app.route('/shows/create')
 def create_shows():
   form = ShowForm()
