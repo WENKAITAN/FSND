@@ -134,7 +134,7 @@ def create_app(test_config=None):
     else:
       return jsonify({
         'success':True,
-        'questions': str(current_questions),
+        'questions': current_questions,
         'total_questions': len(current_questions),
         'current_category': None
       })
@@ -149,12 +149,12 @@ def create_app(test_config=None):
       abort(422)
     previous_questions = body.get('previous_questions')
     cat_id = body.get('quiz_category')['id']
-    if cat_id is None:
+    if cat_id == 0:
       questions = Question.query.all()
-    else:
-      questions = Question.query.filter(Question.category == str(cat_id)).all()
       questions = [question.format() for question in questions]
-      print(questions)
+    else:
+      questions = Question.query.filter(Question.category == cat_id).all()
+      questions = [question.format() for question in questions]
     if len(questions) == 0:
       abort(404)
 
