@@ -40,6 +40,16 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'resource not found')
+
+    def test_delete_question(self):
+        total_questions_before = len(Question.query.all())
+        res = self.client().delete('/questions/2')
+        data = json.loads(res.data)
+        total_questions_after = len(Question.query.all())
+
+        self.assertEqual(res.status_code,200)
+        self.assertEqual(total_questions_before,total_questions_after+1)
+        self.assertEqual(data['success'], True)
     def test_create_questions(self):
         new_question = {
             'question': 'new question',
@@ -48,14 +58,23 @@ class TriviaTestCase(unittest.TestCase):
             'category': 1
         }
         total_questions_before = len(Question.query.all())
-        res = self.client().post('/questions', json=new_question)
+        res = self.client().post('/questions/new', json=new_question)
         data = json.loads(res.data)
         total_questions_after = len(Question.query.all())
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
         self.assertEqual(total_questions_after, total_questions_before + 1)
+    def test_play_quiz(self):
+        new_quiz_round = {'previous_questions': [],
+                          'quiz_category': {'type': 'Entertainment', 'id': 5}}
 
+        res = self.client().post('/quizzes', json=new_quiz_round)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
