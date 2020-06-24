@@ -72,17 +72,20 @@ GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request arguments: None
 - Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
+```
 {'1' : "Science",
 '2' : "Art",
 '3' : "Geography",
 '4' : "History",
 '5' : "Entertainment",
 '6' : "Sports"}
+```
 
-GET '/questions?page=<page_number>'
+GET '/questions?page=<int:page_number>'
 - Fetches a list of paginated questions of all available categories
 - Request Arguments(optional): page:int
 - Example response:
+```
 {
   "categories": {
     "1": "Science",
@@ -119,29 +122,34 @@ GET '/questions?page=<page_number>'
   "success": true,
   "total_questions": 3
 }
+```
 
-DELETE '/questions/<question_id>' 
+DELETE '/questions/<int:question_id>' 
 - Deletes an existing question from the available questions
 - Request arguments: question_id:int
 - Example response:
+```
 {
   "deleted_question_id": 18,
   "success": true
 }
+```
 
 POST '/questions/new' 
 - Adds a new question to the available questions
 - Request body: {questions:string, answer:string, category: string, difficulty, int}
 - Example response
+```
 {
   "created": 31,
   "success": true
 }
-
+```
 Post '/questions/search'  
 - Fetches all the questions where a substring matches the search term(not case-sensitive)
 - Request body: {searchTerm: string}
 - Example response: 
+```
 {
   "current_category": null,
   "questions": [
@@ -156,11 +164,13 @@ Post '/questions/search'
   "success": true,
   "total_questions": 1
 }
+```
 
 GET '/categories/<int:category_id>/questions' 
 - Fetches a list of questions for the specific category
 - Request arguments: category_id: int
 - Example response
+```
 {
   "current_category": null,
   "questions": [
@@ -175,11 +185,13 @@ GET '/categories/<int:category_id>/questions'
   "success": true,
   "total_questions": 1
 }
+```
 
 POST '/quizzes'
 - Fetches a random question within specific category. Previous questions cannot be asked again.
 - Request body: {previous_questions:list, quiz_category: {id:int,type:string}}
 - Example response
+```
 {
   "question": {
     "answer": "Edward Scissorhands",
@@ -190,7 +202,7 @@ POST '/quizzes'
   },
   "success": true
 }
-
+```
 
 
 ## Testing
