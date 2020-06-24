@@ -65,6 +65,43 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
         self.assertEqual(total_questions_after, total_questions_before + 1)
+    
+    def test_search_question_not_found(self):
+        searchTerm = {
+            "searchTerm":"movie"
+        }
+        res = self.client().post('/questions/search', json=searchTerm)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['message'], "resource not found")
+        self.assertEqual(data['success'], False)
+    
+    def test_search_question(self):
+        searchTerm = {
+            "searchTerm":""
+        }
+        res = self.client().post('/questions/search', json=searchTerm)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_get_question_by_category(self):
+        res = self.client().get('/categories/1/questions')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code,200)
+        self.assertEqual(data['success'], True)
+    
+    def test_get_question_by_category_not_found(self):
+        res = self.client().get('/categories/10/questions')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], "resource not found")    
+
     def test_play_quiz(self):
         new_quiz_round = {'previous_questions': [],
                           'quiz_category': {'type': 'Entertainment', 'id': 5}}
