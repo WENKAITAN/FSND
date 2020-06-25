@@ -108,13 +108,15 @@ def create_app(test_config=None):
   def search_question():
     body = request.get_json()
     search_term = body.get('searchTerm',None)
-    if search_term is not None:
+
+    if search_term:
       search_questions = Question.query.filter(Question.question.ilike('%'+search_term+'%')).all()
       formatted_questions = [question.format() for question in search_questions]
       current_questions = pagination_helper(request, formatted_questions)
 
       if len(current_questions) == 0:
         abort(404)
+        
       return jsonify({
         'success':True,
         'questions': current_questions,
