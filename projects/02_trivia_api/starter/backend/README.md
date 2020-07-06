@@ -66,27 +66,142 @@ One note before you delve into your tasks: for each endpoint you are expected to
 8. Create a POST endpoint to get questions to play the quiz. This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions. 
 9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
 
-REVIEW_COMMENT
-```
-This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
-
-Endpoints
-GET '/categories'
-GET ...
-POST ...
-DELETE ...
+## API
 
 GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
-- Request Arguments: None
+- Request arguments: None
 - Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
+```
 {'1' : "Science",
 '2' : "Art",
 '3' : "Geography",
 '4' : "History",
 '5' : "Entertainment",
 '6' : "Sports"}
+```
 
+GET '/questions?page=<int:page_number>'
+- Fetches a list of paginated questions of all available categories
+- Request Arguments(optional): page:int
+- Example response:
+```
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "current_category": null,
+  "questions": [
+    {
+      "answer": "One",
+      "category": 2,
+      "difficulty": 4,
+      "id": 18,
+      "question": "How many paintings did Van Gogh sell in his lifetime?"
+    },
+    {
+      "answer": "Jackson Pollock",
+      "category": 2,
+      "difficulty": 2,
+      "id": 19,
+      "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+    },
+    {
+      "answer": "The Liver",
+      "category": 1,
+      "difficulty": 4,
+      "id": 20,
+      "question": "What is the heaviest organ in the human body?"
+    }
+  ],
+  "success": true,
+  "total_questions": 3
+}
+```
+
+DELETE '/questions/<int:question_id>' 
+- Deletes an existing question from the available questions
+- Request arguments: question_id:int
+- Example response:
+```
+{
+  "deleted_question_id": 18,
+  "success": true
+}
+```
+
+POST '/questions/new' 
+- Adds a new question to the available questions
+- Request body: {questions:string, answer:string, category: string, difficulty, int}
+- Example response
+```
+{
+  "created": 31,
+  "success": true
+}
+```
+Post '/questions/search'  
+- Fetches all the questions where a substring matches the search term(not case-sensitive)
+- Request body: {searchTerm: string}
+- Example response: 
+```
+{
+  "current_category": null,
+  "questions": [
+    {
+      "answer": "Jackson Pollock",
+      "category": 2,
+      "difficulty": 2,
+      "id": 19,
+      "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+    }
+  ],
+  "success": true,
+  "total_questions": 1
+}
+```
+
+GET '/categories/<int:category_id>/questions' 
+- Fetches a list of questions for the specific category
+- Request arguments: category_id: int
+- Example response
+```
+{
+  "current_category": null,
+  "questions": [
+    {
+      "answer": "Edward Scissorhands",
+      "category": 5,
+      "difficulty": 3,
+      "id": 6,
+      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+    }
+  ],
+  "success": true,
+  "total_questions": 1
+}
+```
+
+POST '/quizzes'
+- Fetches a random question within specific category. Previous questions cannot be asked again.
+- Request body: {previous_questions:list, quiz_category: {id:int,type:string}}
+- Example response
+```
+{
+  "question": {
+    "answer": "Edward Scissorhands",
+    "category": 5,
+    "difficulty": 3,
+    "id": 6,
+    "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+  },
+  "success": true
+}
 ```
 
 
