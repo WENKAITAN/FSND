@@ -14,16 +14,11 @@ API_AUDIENCE = 'coffeeshop'
 AuthError Exception
 A standardized way to communicate auth failure modes
 '''
-class AuthError(Exception):
+class AuthError(Exception)
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
 
-@app.errorhandler(AuthError)
-def handle_auth_error(ex):
-    response = jsonify(ex.error)
-    response.status_code = ex.status_code
-    return response
 ## Auth Header
 
 '''
@@ -47,7 +42,10 @@ def get_token_auth_header():
                             "description":"Authorizaion header must start with"
                             "Bearer"}, 401)
     elif len(parts) == 1:
-        raise AuthError({"code","invalid_header",
+        raise AuthError({"code":"invalid_header",
+                            "description":
+                            "Token not found"}, 401)
+        raise AuthError({"code":"invalid_header",
                         "descriptions":"Token not found"}, 401)
     elif len(parts) > 2:
         raise AuthError({"code":"invalid_header",
@@ -62,7 +60,6 @@ def get_token_auth_header():
     @INPUTS
         permission: string permission (i.e. 'post:drink')
         payload: decoded jwt payload
-
     it should raise an AuthError if permissions are not included in the payload
         !!NOTE check your RBAC settings in Auth0
     it should raise an AuthError if the requested permission string is not in the payload permissions array
@@ -82,13 +79,11 @@ def check_permissions(permission, payload):
 @TODO implement verify_decode_jwt(token) method
     @INPUTS
         token: a json web token (string)
-
     it should be an Auth0 token with key id (kid)
     it should verify the token using Auth0 /.well-known/jwks.json
     it should decode the payload from the token
     it should validate the claims
     return the decoded payload
-
     !!NOTE urlopen has a common certificate error described here: https://stackoverflow.com/questions/50236117/scraping-ssl-certificate-verify-failed-error-for-http-en-wikipedia-org
 '''
 def verify_decode_jwt(token):
@@ -136,7 +131,6 @@ def verify_decode_jwt(token):
 @TODO implement @requires_auth(permission) decorator method
     @INPUTS
         permission: string permission (i.e. 'post:drink')
-
     it should use the get_token_auth_header method to get the token
     it should use the verify_decode_jwt method to decode the jwt
     it should use the check_permissions method validate claims and check the requested permission
