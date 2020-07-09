@@ -35,7 +35,7 @@ def get_token_auth_header():
                          "description":
                             "Authorization header is expected"},401)
 
-    parts = auth.split()
+    parts = auth.split(" ")
     if parts[0].lower() != "bearer":
         raise AuthError({"code":"invalid_header",
                             "description":"Authorizaion header must start with"
@@ -65,10 +65,10 @@ def get_token_auth_header():
     return true otherwise
 '''
 def check_permissions(permission, payload):
-    if permission not in payload:
+    if 'permissions' not in payload:
         raise AuthError({"code":"invalid_claims",
                         "description":"Permissions not included in JWT"},400)
-    elif permission not in payload["permission"]:
+    elif permission not in payload["permissions"]:
         raise AuthError({"code":"unauthorized",
                         "description": "Permission not in payload"}, 401)
     

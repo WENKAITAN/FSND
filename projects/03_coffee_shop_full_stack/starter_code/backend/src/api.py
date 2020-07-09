@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, jsonify, abort
 from sqlalchemy import exc
 import json
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 from .database.models import db_drop_and_create_all, setup_db, Drink
 from .auth.auth import AuthError, requires_auth
@@ -16,7 +16,7 @@ CORS(app)
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 '''
-db_drop_and_create_all()
+#db_drop_and_create_all()
 
 ## ROUTES
 '''
@@ -32,8 +32,8 @@ db_drop_and_create_all()
 def get_drinks():
 
     drinks = Drink.query.all()
-    if len(drinks) == 0:
-        abort(404)
+    ##if len(drinks) == 0:
+    ##    abort(404)
 
     formatted_drinks = [drink.short() for drink in drinks]
 
@@ -56,8 +56,8 @@ def get_drinks():
 @requires_auth('get:drinks-detail')
 def get_drink_detail(payload):
     drinks = Drink.query.all()
-    if len(drinks) == 0:
-        abort(404)
+    ##if len(drinks) == 0:
+    ##    abort(404)
     formatted_drinks = [drink.long() for drink in drinks]
     return jsonify({
         "success": True,
@@ -78,7 +78,6 @@ def get_drink_detail(payload):
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks', methods=['POST'])
-
 @requires_auth('post:drinks')
 def create_drink(payload):
     body = request.get_json()
