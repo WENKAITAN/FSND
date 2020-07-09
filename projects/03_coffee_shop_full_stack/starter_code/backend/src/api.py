@@ -77,7 +77,7 @@ def get_drink_detail(payload):
     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the newly created drink
         or appropriate status code indicating reason for failure
 '''
-@app.route('/drinks/new', methods=['POST'])
+@app.route('/drinks', methods=['POST'])
 
 @requires_auth('post:drinks')
 def create_drink(payload):
@@ -202,9 +202,7 @@ def not_found(error):
     error handler should conform to general task above 
 '''
 @app.errorhandler(AuthError)
-def handle_auth_error(error):
-    return jsonify({
-        "success": False,
-        "error": error.status_code,
-        "message": error['description']
-    }), error.status_code
+def handle_auth_error(ex):
+    response = jsonify(ex.error)
+    response.status_code = ex.status_code
+    return response
