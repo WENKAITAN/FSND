@@ -79,22 +79,29 @@ def get_drink_detail(payload):
 '''
 @app.route('/drinks', methods=['POST'])
 @requires_auth('post:drinks')
-def create_drink(payload):
+def create_drink(paylod):
+    """Creates a new drink"""
     body = request.get_json()
-    title = body.get('title', None)
-    recipe = body.get('recipe', None)
-    if "title" not in body or "recipe" not in body:
-        abort(422)
+    if not body:
+        abort(400)
+    if 'title' not in body or 'recipe' not in body:
+        abort(400)
+        new_drink = Drink(title=body['title'],
+        recipe=json.dumps(body['recipe']))
     try:
-        drink = Drink(title = title, recipe = json.dumps(recipe))
-        drink.insert()
+        new_drink.insert()
+    except SystemError:
+        abort(500)
+    selection = Drink.query.all()
+    drinks = [drink.long() for drink in selection if drink.id == new_drink.id]
+    if not drinks:
+        abort(404)
 
-        return jsonify({
-            "success": True,
-            "drinks": [drink.long()]
-        }), 200
-    except:
-        abort(422)
+    return jsonify({
+    'success': True,
+    'drinks': drinks
+    }), 201
+
 
 
 '''
@@ -117,17 +124,20 @@ def patch_drink(payload, id):
     receipe = body['recipe']
     try:
         if 'title' not in body or 'recipe' not in body:
-            abort(423)
-        drink = Drink.query.get(id)
-        drink.title = title
-        drink.recipe = json.dumps(receipe)
+            abort(422)
+        drink = Drink.query.filter(Drink.id == id).one_or_none()
+        if drink:
+            drink.title = title
+            drink.recipe = json.dumps(receipe)
 
-        drink.update()
+            drink.update()
 
-        return jsonify({
-            "success": True,
-            "drinks": [drink.long()]
-        }), 200
+            return jsonify({
+                "success": True,
+                "drinks": [drink.long()]
+            }), 200
+        else:
+            abort(404)
     except:
         abort(422)
 
@@ -146,15 +156,16 @@ def patch_drink(payload, id):
 @requires_auth("delete:drinks")
 def delete_drink(payload, id):
     try:
-        drink = Drink.query.get(id)
-        if len(drink) == 0:
-            abort(404)
-        drink.delete()
+        drink = Drink.query.filter(Drink.id == id).one_or_none()
+        if drink:
+            drink.delete()
 
-        return jsonify({
-            "success": True,
-            "delete": id
-        }), 200
+            return jsonify({
+                "success": True,
+                "delete": id
+            }), 200
+        else:
+            abort(404)
     except:
         abort(422)
     
