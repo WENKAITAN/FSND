@@ -49,7 +49,7 @@ def drinks():
 
 @app.route('/drinks', methods=['POST'], endpoint='post_drink')
 @requires_auth('post:drinks')
-def drinks(f):
+def create_drinks(f):
     """
      post:drinks permission
      This API creates a new drink and returns its long description
@@ -103,7 +103,7 @@ def drinks_detail(f):
 
 @app.route('/drinks/<id>', methods=['PATCH'], endpoint='patch_drink')
 @requires_auth('patch:drinks')
-def drinks(f, id):
+def patch_drinks(f, id):
     """
      patch:drinks permission
      This API updates a drink if it exists
@@ -142,7 +142,7 @@ def drinks(f, id):
 
 @app.route('/drinks/<id>', methods=['DELETE'], endpoint='delete_drink')
 @requires_auth('patch:drinks')
-def drinks(f, id):
+def delete_drinks(f, id):
     """
      delete:drinks permission
      This API deletes a drink if it exists
