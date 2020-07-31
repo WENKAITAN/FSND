@@ -1,4 +1,5 @@
 import os
+from flask_cors import CORS
 from flask import Flask
 from models import setup_db
 
