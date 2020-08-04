@@ -140,7 +140,7 @@ def create_app(test_config=None):
       return jsonify({
         "success": False,
         "error": "An error occured"
-      }),500
+      }), 500
 
   '''
   APIS for movies

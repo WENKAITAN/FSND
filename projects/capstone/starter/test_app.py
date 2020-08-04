@@ -9,15 +9,15 @@ from models import setup_db, Movie, Actor, Movie, Actor,db
 #Token to test the unit tests
 
 producer_headers = {
-    "Authorization": "Bearer" + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhUNW9JNF83elRmUndCRVBIa2FnaSJ9.eyJpc3MiOiJodHRwczovL3dlbmthaXRhbi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxZjYyYTkyOGRkYmEwMDM3NDNiYzBkIiwiYXVkIjoiY2FzdGluZyBwcm9qZWN0IiwiaWF0IjoxNTk2MzE4MTA0LCJleHAiOjE1OTY0MDQ1MDQsImF6cCI6IklLR1BWaVZQWXE1RTJjNlhXaGNUaTVKOU5iVUhSRVBnIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiLCJwb3N0Om1vdmllcyJdfQ.gINRtEY2SwYO1jooShF73afc6eEMYTsZII2b8RZHPjAnaDnmIMoBdOH1JJlzvU7nz6XuCZqrCNzugTu9DM2azL-3bPhlpmAQaY5-XpodJeUotLWhfBlIQnnG5MwwadtHg8MnbojQRUJFEWt_t-teUVm586KxpW8zj8CdTfq2o-9nDUK-WZfhNh7xDOHodKU3ZdcH0UIepQR0rZj4Cqr-PfbCznlpiQqBZHXZXdu5wte_Nitw6o0rynGCqRaSgR32S9GL-yr51zxx-RegYUqILF5R3EPMl9SWU5ka4JQXUwejKf7jEqOH_dagM5ZAW7jl1UZRv8AAg0nQ5UrHZpiEDA"
+    "Authorization": "Bearer " + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhUNW9JNF83elRmUndCRVBIa2FnaSJ9.eyJpc3MiOiJodHRwczovL3dlbmthaXRhbi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxZjYyYTkyOGRkYmEwMDM3NDNiYzBkIiwiYXVkIjoiY2FzdGluZyBwcm9qZWN0IiwiaWF0IjoxNTk2NDk4MjE0LCJleHAiOjE1OTY1ODQ2MTQsImF6cCI6IklLR1BWaVZQWXE1RTJjNlhXaGNUaTVKOU5iVUhSRVBnIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiLCJwb3N0Om1vdmllcyJdfQ.QqiS2SRBU2S28fJI1zHGaemGysw2_eNpb8iJGG-wKwcS0sz4VlVVucNG2A0uRHJQDCeKIFxyZwq5It0_ljlxzDArtkrCrj6JGsgNTMDEPR3tMxP2CQGQjaq-qEEIXt2vDH-He-b4P0P5Tojko5J8IwNaLca5ZtfcA8k_RXe_91_OimowGJwNOckIV9JGFv_9M1q80ltXsmeBiWl8tolcLsdaE7AKQrOIdRG66R3kC7AJa-c7qYZA6SFtFNTK8SrwcUgHwflxwQSjEKTBrbhdtpYWnIMoLXT9NUeMRAGhDpmYDZ9DQcciixa_Yg1pKekH8TeZ8JaZlsiChZrocu19Ng"
 }
 
 director_headers = {
-    "Authorization": "Bearer" + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhUNW9JNF83elRmUndCRVBIa2FnaSJ9.eyJpc3MiOiJodHRwczovL3dlbmthaXRhbi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxZjYyY2NiYmQ4Y2UwMDNkNjIwNWY0IiwiYXVkIjoiY2FzdGluZyBwcm9qZWN0IiwiaWF0IjoxNTk2MzE4MDcxLCJleHAiOjE1OTY0MDQ0NzEsImF6cCI6IklLR1BWaVZQWXE1RTJjNlhXaGNUaTVKOU5iVUhSRVBnIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJwb3N0OmFjdG9ycyJdfQ.NNJClQjYw7m2RY7Qq1GduPu7vthAIYozmW8k6KomOexVR2xL2aez9063eF5aAP5J3IIuxQU4_pE0__C54fAXivC1rnSJadUzX_6zBl_IiyiStdCTNBM4_KsBxRmmNM0XPX7jdKh1h1oJAznqQVwTWRCA8A1ivauHZIdHy1VIKyTadJKemydeYDyjhtDlfktwTrWDgJ0uVEIk7vzBp16LOwDLEevmozXQayA4x_7yQ54BpFbhEnWdezrt0ljyBYnWf6klGO3tZAZwuMNyEcxbfaa3o8s0wnpWCFDLlBJb-Gc1cmImaREk192X4yDr71OU6qn-90UTmnJQn3x82qEHUw"
+    "Authorization": "Bearer " + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhUNW9JNF83elRmUndCRVBIa2FnaSJ9.eyJpc3MiOiJodHRwczovL3dlbmthaXRhbi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxZjYyY2NiYmQ4Y2UwMDNkNjIwNWY0IiwiYXVkIjoiY2FzdGluZyBwcm9qZWN0IiwiaWF0IjoxNTk2NDk4MTI2LCJleHAiOjE1OTY1ODQ1MjYsImF6cCI6IklLR1BWaVZQWXE1RTJjNlhXaGNUaTVKOU5iVUhSRVBnIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJwb3N0OmFjdG9ycyJdfQ.EYXYCuGeBf9i70KrIAFyeqBs-WJmkq5KPp48SZQ6PLCUFj8bJxWjVd2fYCRvUuup0K0ikpXD0QI5uXMqBYcKcwYT5KAmmVYR1-bB-I4HFwa56kmXGzyedv5n6hmarDM9ZlnnP0VjD8YXdjm-RHHp46_QcPUvDuPe_wsJtcZy0590BEA1smQgJV8VuMzor_pSRjEDGlyjcSQVRNhJyUgIzAdXLUMAYlgIKYsHRaItL9fKFEeiV9huReY0O9BwJch-hIMzYdOuSJcwuSAbZ7dEeG-ERCnwJuEsK98pv3y_aYdmkCy9dG4UH28VKgfg6bktJRITKdAZ-JAwAPnc1myHWQ"
 }
 
 assistant_headers = {
-    "Authorization": "Bearer" + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhUNW9JNF83elRmUndCRVBIa2FnaSJ9.eyJpc3MiOiJodHRwczovL3dlbmthaXRhbi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxZjYyODYyOGRkYmEwMDM3NDNiYzBiIiwiYXVkIjoiY2FzdGluZyBwcm9qZWN0IiwiaWF0IjoxNTk2MzE4MDI1LCJleHAiOjE1OTY0MDQ0MjUsImF6cCI6IklLR1BWaVZQWXE1RTJjNlhXaGNUaTVKOU5iVUhSRVBnIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyJdfQ.r5Vjc5k0vLrp3kByr__AKUKLeWxr38_aLrvbHlUqBCLwphk1sBXvElB4OMccb46OmEzzg2usA9VDMi7HDFRzimbTjynavm-VyLGTN7gpJOcDR__ss7CldztGb4GQaTEmO5pEZKFuWVhaEWcvAHxpJi4EH590FE3Az7bErSQncPk1UPofWqhEFV5fAQISLkTTRo7oaIZsMRSezq_UPcuPwJEfkUSpu0WaH5epvDND6VTCiYlXK9n7eswGCtw1xqmf2oORztT60R9dlpvoV0aTM2eJO-Cc34uDNtMWwqDp5rXUq_is2lLY3gqTD-Xa6MdMpok2bxH6ZflX_BWM9F92tQ"
+    "Authorization": "Bearer " + "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhUNW9JNF83elRmUndCRVBIa2FnaSJ9.eyJpc3MiOiJodHRwczovL3dlbmthaXRhbi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxZjYyODYyOGRkYmEwMDM3NDNiYzBiIiwiYXVkIjoiY2FzdGluZyBwcm9qZWN0IiwiaWF0IjoxNTk2NDk4MDkxLCJleHAiOjE1OTY1ODQ0OTEsImF6cCI6IklLR1BWaVZQWXE1RTJjNlhXaGNUaTVKOU5iVUhSRVBnIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyJdfQ.xZ7g7E1L0RIi6OYdlbRWDiy1bSbshTEHswV5cvh-lPCgs4TKc0h_fgSGQLVhpXbYy3zeNU-ty50TrNmKKXftj6z_WrbbR6JZUmpein4vWDsTYM8AjZlekBhhObrhG7taO3xkrkz97_IiKtoyXtnwXUJ3HuOYFpSsKL9ek2U7YL2gmSPIpryCxFXQiPzuzkuYwsQoQ1MI2sPnvbyU95rzd6HakB3h4ue3Tl7Dnoa9EFz_Z3SULY9bUgYYKYhgWOrBrg1xCpo_q4LbOFMHSyVTaN7vd50b3CRvylO5wG7aCxeCQajx5OfG3TrqDthMlQ1PIaKq3LPZ6aHU6xVWzJgiWA"
 }
 
 class CapstoneTestCase(unittest.TestCase):
@@ -32,14 +32,13 @@ class CapstoneTestCase(unittest.TestCase):
 
         self.new_movie = {
             'title': 'test_movie',
-            'release_date': "2020-07-31",
+            'release_date': "2020-07-31"
         }
 
         self.new_actor = {
             'name': 'test_actor',
             'age': 20,
-            'gender': 'Male',
-            'movie_id': 1
+            'gender': 'Male'
         }
         # binds the app to the current context
         with self.app.app_context():
@@ -62,11 +61,10 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_get_movies_fail(self):
-        res = self.client().get('movies', headers=assistant_headers)
+        res = self.client().get('movies')
         data = json.loads(res.data.decode('utf-8'))
         
-        self.assertEqual(res.status_code, 404)
-        self.assertEqual(data['success'], False)
+        self.assertEqual(res.status_code, 401)
     
     def test_get_actors(self):
         res = self.client().get('/actors', headers=assistant_headers)
@@ -76,14 +74,13 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_get_actors_fail(self):
-        res = self.client().get('/actors', headers=assistant_headers)
+        res = self.client().get('/actors')
         data = json.loads(res.data.decode('utf-8'))
 
-        self.assertEqual(res.status_code, 404)
-        self.assertEqual(data['success'], False)
+        self.assertEqual(res.status_code, 401)
 
     def test_post_movies(self):
-        res = self.client().post('/movies', json=self.new_movie, headers=director_headers)
+        res = self.client().post('/movies', json=self.new_movie, headers=producer_headers)
         data = json.loads(res.data.decode('utf-8'))
 
         self.assertEqual(res.status_code, 200)
@@ -96,10 +93,10 @@ class CapstoneTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['new_movie']['age'], 20)
+        self.assertEqual(data["new_actor"]['age'], 20)
 
     def test_patch_movie(self):
-        res = self.client().patch('/movies/3', json=self.new_movie, headers=producer_headers)
+        res = self.client().patch('/movies/11', json=self.new_movie, headers=producer_headers)
         data = json.loads(res.data.decode('utf-8'))
 
         self.assertEqual(res.status_code, 200)
@@ -107,14 +104,14 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(data['updated_movie']['title'], "test_movie")
     
     def test_patch_movie_fail(self):
-        res = self.client().patch('/movies/6', json=self.new_movie, headers=director_headers)
+        res = self.client().patch('/movies/100', json=self.new_movie, headers=director_headers)
         data = json.loads(res.data.decode('utf-8'))
 
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
 
     def test_patch_actor(self):
-        res = self.client().patch('/actors/4', json=self.new_actor, headers=producer_headers)
+        res = self.client().patch('/actors/10', json=self.new_actor, headers=producer_headers)
         data = json.loads(res.data.decode('utf-8'))
 
         self.assertEqual(res.status_code, 200)
@@ -125,15 +122,16 @@ class CapstoneTestCase(unittest.TestCase):
         res = self.client().patch('/actors/100', json=self.new_actor, headers=producer_headers)
         data = json.loads(res.data.decode('utf-8'))
 
-        self.assertEqual(res.status_code, 404)
+        self.assertEqual(res.status_code, 500)
         self.assertEqual(data['success'], False)
 
     def test_delete_movie(self):
-        res = self.client().delete('/movies/3', headers=producer_headers)
+        res = self.client().delete('/movies/9', headers=producer_headers)
         data = json.loads(res.data.decode('utf-8'))
 
         self.assertEqual(data['success'], True)
         self.assertEqual(res.status_code, 200)
+
     def test_delete_movie_fail(self):
         res = self.client().delete('/movies/200', headers=producer_headers)
         data = json.loads(res.data.decode('utf-8'))
@@ -142,7 +140,7 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_delete_actor(self):
-        res = self.client().delete('/actors/1', headers=producer_headers)
+        res = self.client().delete('/actors/6', headers=producer_headers)
         data = json.loads(res.data.decode('utf-8'))
 
         self.assertEqual(data['success'], True)
@@ -150,8 +148,7 @@ class CapstoneTestCase(unittest.TestCase):
     def test_delete_actor_fail(self):
         res = self.client().delete('/actors/200', headers=producer_headers)
         data = json.loads(res.data.decode('utf-8'))
-
-        self.assertEqual(res.status_code, 404)
+        
         self.assertEqual(data['success'], False)
 
           
