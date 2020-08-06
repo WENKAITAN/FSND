@@ -112,7 +112,7 @@ PATCH '/actors/<int:id>'
   }
 }
 ```
-- 
+
 DELETE '/actors/<int:id>'
 - Deletes an actor from database based on the id passed in from parameter
 - Returns a json object containing
