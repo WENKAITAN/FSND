@@ -1,4 +1,4 @@
-# Casting Agrency Backend
+# Casting Agency Backend
 
 Casting Agency is an app that is responsible for creating movies, adding actors and assigning them to those movies. This is my capstone project for the Udacity Full Stack Web Developer nanodegree.
 
