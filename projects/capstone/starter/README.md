@@ -195,3 +195,22 @@ DELETE '/movies/<int:id>'
   "success": true
 }
 ```
+
+## API RBAC
+
+This API has 3 roles
+
+### Casting Producer
+
+- All permissions a Casting Director has
+- Add or delete a movie from the database
+
+### Casting Director
+
+- All permissions a Casting Assistant has
+- Add or delete an actor from the database
+- Modify actors or movies
+
+### Casting Assistant
+
+- Can view actors and movies
