@@ -80,7 +80,7 @@ GET '/actors'
 POST '/actors'
 - Creates a new actor to database
 - Return a json object containing 
-```{"success":True,"created":id,"new_movie":{}}```
+```{"success":True,"created":id,"new_actor":{}}```
 - Sample: ```curl -X POST http://127.0.0.1:5000/actors -H "Authorization: Bearer <Access_TOKEN>" -d '{"name":"test","age":"30","gender":"male"}'```
 ```
 {
