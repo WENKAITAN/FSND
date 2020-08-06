@@ -11,6 +11,7 @@ ALGORITHMS=['RS256']
 AUTH0_JWT_API_AUDIENCE='casting project'
 AUTH0_CLIENT_ID='IKGPViVPYq5E2c6XWhcTi5J9NbUHREPg'
 AUTH0_CALLBACK_URL='http://localhost:8080'
+
 def create_app(test_config=None):
   # create and configure the app
   app = Flask(__name__)
