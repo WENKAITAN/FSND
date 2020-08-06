@@ -222,3 +222,9 @@ We use auth0 to set up RBAC for this API which has 3 roles
 ## Tests
 
 To run the tests, run ```python3 test_app.py```
+
+## Troubleshooting
+
+If the token is expired, you can generate a new one by visiting [auth0 login page]( https://wenkaitan.us.auth0.com/authorize?audience=casting project&response_type=token&client_id=IKGPViVPYq5E2c6XWhcTi5J9NbUHREPg&redirect_uri=http://localhost:8080)
+
+```username: producer@gmail.com password:Kk9162477..```
