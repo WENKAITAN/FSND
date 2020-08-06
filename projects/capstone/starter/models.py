@@ -4,9 +4,10 @@ from flask_migrate import Migrate
 import json
 import os
 
+'''
 database_name = "capstonetan"
 database_path = "postgres://{}/{}".format('localhost:5432', database_name)
-
+'''
 db = SQLAlchemy()
 
 
@@ -15,7 +16,7 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://kiidsvyqwgczjt:ba9226cdff77e1b4608d05c0386469ae62f3a4da1020ba547738e64c39c60d11@ec2-54-243-67-199.compute-1.amazonaws.com:5432/dartd8lig36dqn"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)

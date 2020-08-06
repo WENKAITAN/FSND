@@ -2,6 +2,8 @@
 
 Casting Agency is an app that is responsible for creating movies, adding actors and assigning them to those movies. This is my capstone project for the Udacity Full Stack Web Developer nanodegree.
 
+It is hosted on Heroku [here](https://castingtwk.herokuapp.com)
+
 ## Getting started
 
 ### Installing Dependencies
