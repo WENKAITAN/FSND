@@ -200,7 +200,7 @@ DELETE '/movies/<int:id>'
 
 ## API RBAC
 
-This API has 3 roles
+We use auth0 to set up RBAC for this API which has 3 roles
 
 ### Casting Producer
 
