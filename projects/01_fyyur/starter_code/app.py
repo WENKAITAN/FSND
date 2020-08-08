@@ -361,7 +361,7 @@ def show_artist(artist_id):
 def delete_artist(artist_id):
   error = False
   try:
-    Artist.query.filter(id==artist_id).delete()
+    Artist.query.filter(Artist.id==artist_id).delete()
     db.session.commit()
     flash(f"Artist is deleted successfully!")
   except:
