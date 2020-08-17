@@ -7,7 +7,7 @@ import json
 database_name = "trivia"
 database_path = "postgres://{}/{}".format('localhost:5432', database_name)
 '''
-database_path = "postgres://hzwrbkoshevemk:6cd2003e53dfc37a1087807c059d2ff3096a433bf75a1eb4cd286be606716cef@ec2-34-225-162-157.compute-1.amazonaws.com:5432/d387838slaf5jm"
+database_path = "postgres://bttsohnfnzsaxg:7fecf0c88c7512c088c32c308e779b2a2a11306bfd476e0ad81fb4b4898b9dde@ec2-107-20-15-85.compute-1.amazonaws.com:5432/df9avs6lu0m286"
 db = SQLAlchemy()
 
 '''

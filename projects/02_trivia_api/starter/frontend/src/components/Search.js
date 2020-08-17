@@ -7,6 +7,7 @@ class Search extends Component {
 
   getInfo = (event) => {
     event.preventDefault();
+    console.log(this.state.query)
     this.props.submitSearch(this.state.query)
   }
 
